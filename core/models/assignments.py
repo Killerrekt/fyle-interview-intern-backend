@@ -90,8 +90,8 @@ class Assignment(db.Model):
         return cls.filter(cls.student_id == student_id).all()
 
     @classmethod
-    def get_assignments_by_teacher(cls): #broken need to fix
-        return cls.query.all()
+    def get_assignments_by_teacher(cls, _id): #broken need to fix
+        return cls.filter(cls.teacher_id == _id).all()
 
     @classmethod
     def get_assignments_by_principal(cls):
@@ -100,8 +100,9 @@ class Assignment(db.Model):
     
     @classmethod
     def principal_mark_grade(cls, _id, grade, auth_principal: AuthPrincipal):
-        assignment = cls.filter(cls.id == _id,cls.state != AssignmentStateEnum.DRAFT)#.first()
+        assignment = Assignment.get_by_id(_id)
         assertions.assert_found(assignment, 'No assignment with this id was found')
+        assertions.assert_valid(assignment.state == AssignmentStateEnum.DRAFT,'only non draft assignment can be graded')
 
         assignment.grade = grade
         assignment.state = AssignmentStateEnum.GRADED
