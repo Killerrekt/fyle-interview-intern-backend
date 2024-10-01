@@ -89,5 +89,22 @@ class Assignment(db.Model):
         return cls.filter(cls.student_id == student_id).all()
 
     @classmethod
-    def get_assignments_by_teacher(cls):
+    def get_assignments_by_teacher(cls): #broken need to fix
         return cls.query.all()
+
+    @classmethod
+    def get_assignments_by_principal(cls):
+        return cls.filter((cls.state == AssignmentStateEnum.SUBMITTED or cls.state == AssignmentStateEnum.GRADED))
+    
+    
+    @classmethod
+    def principal_mark_grade(cls, _id, grade, auth_principal: AuthPrincipal):
+        assignment = Assignment.get_by_id(_id)
+        assertions.assert_found(assignment, 'No assignment with this id was found')
+        #assertions.assert_valid(grade is not None, 'assignment with empty grade cannot be graded')
+
+        assignment.grade = grade
+        assignment.state = AssignmentStateEnum.GRADED
+        db.session.flush()
+
+        return assignment
