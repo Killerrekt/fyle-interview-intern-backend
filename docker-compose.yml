@@ -1,0 +1,6 @@
+services:
+  api:
+    build: .
+    ports:
+      - 7755:7755
+    restart: on-failure:5
