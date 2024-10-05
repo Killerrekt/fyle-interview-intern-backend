@@ -41,6 +41,8 @@ rm core/store.sqlite3
 flask db upgrade -d core/migrations/
 ```
 
+or
+
 ```
 make dbreset
 ```
@@ -50,6 +52,8 @@ make dbreset
 ```
 bash run.sh
 ```
+
+or
 
 ```
 make server
@@ -65,6 +69,8 @@ pytest -vvv -s tests/
 # open htmlcov/index.html
 ```
 
+or
+
 ```
 make test
 ```
@@ -73,4 +79,10 @@ make test
 
 ```
 docker compose up
+```
+
+### API Docs
+
+```
+https://documenter.getpostman.com/view/26244894/2sAXxMfZ1e
 ```
