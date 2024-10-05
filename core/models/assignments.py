@@ -104,7 +104,7 @@ class Assignment(db.Model):
     def principal_mark_grade(cls, _id, grade, auth_principal: AuthPrincipal):
         assignment = Assignment.get_by_id(_id)
         assertions.assert_found(assignment, 'No assignment with this id was found')
-        assertions.assert_valid(assignment.state == AssignmentStateEnum.DRAFT,'only non draft assignment can be graded')
+        assertions.assert_valid(assignment.state != AssignmentStateEnum.DRAFT,'only non draft assignment can be graded')
 
         assignment.grade = grade
         assignment.state = AssignmentStateEnum.GRADED
